@@ -27,11 +27,11 @@ test cases (2025)
     ten guesses, last one all correct, game win
     win in under 10 guesses
 """
+import requests
 
-
-num_to_guess = "2025"
-
-
+num_to_guess = requests.get('https://www.random.org/integers/?num=4&min=0&max=7&col=1&base=10&format=plain&rnd=new').text.replace("\n", "")
+print(num_to_guess)
+print(type(num_to_guess))
 def game():
     num_guesses = 1
     history_guesses = []
