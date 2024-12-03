@@ -12,6 +12,16 @@ on loop
             add to guess counter
             ten guesses ends the game 
                 offer replay
+
+extras:
+    allow for replay
+    allow choice in length of code
+    track scores across games
+    hint mode:
+        correct guess of number and location is revealed (---- => --3-)
+        written hint about number not in code
+        written hint about correct number, but not location
+                
 think about:
     don't make it recursive in the replays
     handling incorrect input (wrong chars, length)
