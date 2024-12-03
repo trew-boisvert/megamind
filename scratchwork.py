@@ -14,7 +14,7 @@ on loop
                 offer replay
 think about:
     don't make it recursive in the replays
-    handling incorrect input
+    handling incorrect input (wrong chars, length)
 
 test cases (2025)
     all incorrect (1346)
@@ -45,6 +45,11 @@ def game():
         if current_guess == num_to_guess:
             print("You win!")
             break
+        elif current_guess.isnumeric() == False:
+            print("Guesses need to be numeric")
+            continue
+        elif len(current_guess) != 4:
+            print("Guesses should be exactly four numbers")
         else:
             tally_correct_num_loc = 0
             tally_correct_num_no_loc = 0
@@ -60,9 +65,7 @@ def game():
             #check correct guess wrong location   
             for char in current_guess:
                 if char in copy_answer:
-                    print("char", char)
                     copy_answer.remove(char)
-                    print("copy answer update", copy_answer)
                     #update counter
                     tally_correct_num_no_loc += 1
             #check for all wrong (if both counters empty)
