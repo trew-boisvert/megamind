@@ -16,7 +16,6 @@ def choose_difficulty():
     if difficulty not in difficulty_levels:
         print("Unexpected input, but we'll assume you mean normal mode")
         
-
     payload = {'num': level,
                'min': '0',
                'max': '7',
@@ -26,7 +25,7 @@ def choose_difficulty():
                'rnd': 'new'
                }
     
-    api_request = requests.get('https://www.random.org/integers/', params=payload)
+    api_request = requests.get('https://www.random.org/integers/', params=payload, timeout=5)
     api_request.raise_for_status()
     num_to_guess = api_request.text.replace("\n", "")
 
