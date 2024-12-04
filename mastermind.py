@@ -15,7 +15,7 @@ def choose_difficulty():
 
     if difficulty not in difficulty_levels:
         print("Unexpected input, but we'll assume you mean normal mode")
-        
+
     payload = {'num': level,
                'min': '0',
                'max': '7',
@@ -24,7 +24,7 @@ def choose_difficulty():
                'format': 'plain',
                'rnd': 'new'
                }
-    
+
     api_request = requests.get('https://www.random.org/integers/', params=payload, timeout=5)
     api_request.raise_for_status()
     num_to_guess = api_request.text.replace("\n", "")
@@ -43,13 +43,13 @@ def guess_validity(current_guess, level):
         print("*** Guesses need to be numeric ***")
         print()
         return False
-    
+
     if len(current_guess) != level:
         print()
         print(f"*** Guesses should be exactly {level} numbers ***")
         print()
         return False
-    
+
     return True
 
 
