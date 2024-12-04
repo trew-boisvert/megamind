@@ -15,7 +15,8 @@ on loop
 
 extras:
     allow for replay
-    allow choice in length of code
+    allow choice in length of code/ change difficulty
+        allow choice to change difficulty between replays?
     track scores across games
     hint mode:
         correct guess of number and location is revealed (---- => --3-)
@@ -38,11 +39,37 @@ test cases (2025)
     win in under 10 guesses
 """
 import requests
+def choose_difficulty():
+    print("Which difficulty level would you like?  1 (easy) 2 (normal) 3 (hard)?")
+    difficulty = input("1/2/3 --- ")
 
+    if difficulty == '1':
+        level = '3'
+    elif difficulty == '2':
+        level = '4'
+    elif difficulty == '3':
+        level = '5'
+    else:
+        print("Unexpected input, but we'll assume you mean normal mode")
+        level = '4'
+
+    payload = {'num': level,
+               'min': '0',
+               'max': '7',
+               'col': '1',
+               'base': '10',
+               'format': 'plain',
+               'rnd': 'new'
+               }
+
+    api_request = requests.get('https://www.random.org/integers/', params=payload)
+    num_to_guess = api_request.text.replace("\n", "")
+    return [level, num_to_guess]
 
 def game():
-    api_request = requests.get('https://www.random.org/integers/?num=4&min=0&max=7&col=1&base=10&format=plain&rnd=new')
-    num_to_guess = api_request.text.replace("\n", "")
+    level_and_num_to_guess = choose_difficulty()
+    level = int(level_and_num_to_guess[0])
+    num_to_guess = level_and_num_to_guess[1]
     num_guesses = 1
     history_guesses = []
 
@@ -56,22 +83,27 @@ def game():
         print()
         current_guess = input("What is your guess?")
         if current_guess == num_to_guess:
-            print("You win!")
+            print()
+            print("*** You win! ***")
             break
-        elif current_guess.isnumeric() == False:
-            print("Guesses need to be numeric")
+        elif current_guess.isnumeric() is False:
+            print()
+            print("*** Guesses need to be numeric ***")
+            print()
             continue
-        elif len(current_guess) != 4:
-            print("Guesses should be exactly four numbers")
+        elif len(current_guess) != level:
+            print()
+            print(f"*** Guesses should be exactly {level} numbers ***")
+            print()
         else:
             tally_correct_num_loc = 0
             tally_correct_num_no_loc = 0
 
-            for num in range(4):
+            for num in range(level):
                 if current_guess[num] == num_to_guess[num]:
-                    tally_correct_num_loc += 1  
+                    tally_correct_num_loc += 1
             copy_answer = list(num_to_guess)
-  
+
             for char in current_guess:
                 if char in copy_answer:
                     copy_answer.remove(char)
@@ -79,7 +111,7 @@ def game():
             if tally_correct_num_no_loc == 0:
                 feedback = "All wrong"
             else:
-                feedback = f"{tally_correct_num_no_loc} correct numbers and {tally_correct_num_loc} correct location"        
+                feedback = f"{tally_correct_num_no_loc} correct numbers and {tally_correct_num_loc} correct location"
             history_guesses.append(f"Round {num_guesses} Guess: {current_guess} Feedback: {feedback}")
             num_guesses += 1
     print(f"The answer was {num_to_guess}")
