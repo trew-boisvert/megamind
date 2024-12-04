@@ -25,8 +25,9 @@ def choose_difficulty():
                'format': 'plain',
                'rnd': 'new'
                }
-
+    
     api_request = requests.get('https://www.random.org/integers/', params=payload)
+    api_request.raise_for_status()
     num_to_guess = api_request.text.replace("\n", "")
 
     return [level, num_to_guess]
@@ -115,7 +116,7 @@ def play():
     """
 
     print("Welcome!")
-    
+
     while True:
         print("Would you like to play a game of mastermind?")
         play_game = input("y/n:   ")
