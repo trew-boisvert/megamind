@@ -12,7 +12,7 @@ def choose_difficulty():
 
     difficulty_levels = {'1': '3', '2': '4', '3': '5'}
     level = difficulty_levels.get(difficulty, '4')
-    
+
     if difficulty not in difficulty_levels:
         print("Unexpected input, but we'll assume you mean normal mode")
         
@@ -59,22 +59,22 @@ def create_feedback(current_guess, num_to_guess, level):
     Returns a string.
     """
 
-    tally_correct_num_loc = 0
-    tally_correct_num_no_loc = 0
+    total_correct_loc = 0
+    total_correct_num = 0
 
     for num in range(level):
         if current_guess[num] == num_to_guess[num]:
-            tally_correct_num_loc += 1
+            total_correct_loc += 1
     copy_answer = list(num_to_guess)
 
     for char in current_guess:
         if char in copy_answer:
             copy_answer.remove(char)
-            tally_correct_num_no_loc += 1
-    if tally_correct_num_no_loc == 0:
+            total_correct_num += 1
+    if total_correct_num == 0:
         feedback = "All wrong"
     else:
-        feedback = f"{tally_correct_num_no_loc} correct numbers and {tally_correct_num_loc} correct location"
+        feedback = f"{total_correct_num} correct numbers and {total_correct_loc} correct location"
     return feedback
 
 
