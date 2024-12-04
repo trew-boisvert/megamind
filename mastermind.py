@@ -10,8 +10,8 @@ def choose_difficulty():
     print("Which difficulty level would you like?  1 (easy) 2 (normal) 3 (hard)?")
     difficulty = input("1/2/3 --- ")
 
-    difficulty_levels = {'1': '3', '2': '4', '3': '5'}
-    level = difficulty_levels.get(difficulty, '4')
+    difficulty_levels = {'1': 3, '2': 4, '3': 5}
+    level = difficulty_levels.get(difficulty, 4)
 
     if difficulty not in difficulty_levels:
         print("Unexpected input, but we'll assume you mean normal mode")
@@ -83,9 +83,7 @@ def game():
     Runs one game of mastermind.
     """
 
-    level_and_num_to_guess = choose_difficulty()
-    level = int(level_and_num_to_guess[0])
-    num_to_guess = level_and_num_to_guess[1]
+    level, num_to_guess = choose_difficulty()
     num_guesses = 1
     history_guesses = []
 
@@ -93,10 +91,8 @@ def game():
         print("--------------GUESS HISTORY----------------")
         for guess in history_guesses:
             print(guess)
-        print("--------------------------------------------")
-        print()
-        print(f"Round {num_guesses} of 10")
-        print()
+        print("--------------------------------------------\n")
+        print(f"Round {num_guesses} of 10\n")
 
         current_guess = input("What is your guess?")
 
@@ -104,8 +100,7 @@ def game():
             continue
 
         if current_guess == num_to_guess:
-            print()
-            print("*** You win! ***")
+            print("\n*** You win! ***")
             break
         feedback = create_feedback(current_guess, num_to_guess, level)
         history_guesses.append(f"Round {num_guesses} Guess: {current_guess} Feedback: {feedback}")
