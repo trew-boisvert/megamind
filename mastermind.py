@@ -10,15 +10,12 @@ def choose_difficulty():
     print("Which difficulty level would you like?  1 (easy) 2 (normal) 3 (hard)?")
     difficulty = input("1/2/3 --- ")
 
-    if difficulty == '1':
-        level = '3'
-    elif difficulty == '2':
-        level = '4'
-    elif difficulty == '3':
-        level = '5'
-    else:
+    difficulty_levels = {'1': '3', '2': '4', '3': '5'}
+    level = difficulty_levels.get(difficulty, '4')
+    
+    if difficulty not in difficulty_levels:
         print("Unexpected input, but we'll assume you mean normal mode")
-        level = '4'
+        
 
     payload = {'num': level,
                'min': '0',
