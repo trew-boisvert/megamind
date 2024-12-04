@@ -16,9 +16,9 @@
 11. Open the repo in VS Code, and use the terminal to run the following commands:
     - `virtualenv env`
     - `source env/bin/activate`
-12. In the terminal, use this command to install the requests library
+12. In the terminal, use this command to install the [requests](https://requests.readthedocs.io/en/latest/) library
     - `pip3 install -r requirements.txt`
-13. Run the command `python3 scratchwork.py` in the terminal to run the game
+13. Run the command `python3 mastermind.py` in the terminal to run the game
 14. Snack break, you deserve it
 
 
