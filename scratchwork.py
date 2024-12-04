@@ -2,6 +2,11 @@ import requests
 
 
 def choose_difficulty():
+    """
+    Ask player to choose the difficulty level and then fetch the secret number from the API
+    Returns a list containing the level and secret number as strings.
+    """
+
     print("Which difficulty level would you like?  1 (easy) 2 (normal) 3 (hard)?")
     difficulty = input("1/2/3 --- ")
 
@@ -26,10 +31,15 @@ def choose_difficulty():
 
     api_request = requests.get('https://www.random.org/integers/', params=payload)
     num_to_guess = api_request.text.replace("\n", "")
+
     return [level, num_to_guess]
 
 
 def guess_validity(current_guess, level):
+    """
+    Check the validity of the player's current guess.
+    Returns boolean value.  
+    """
 
     if current_guess.isnumeric() is False:
         print()
@@ -46,7 +56,11 @@ def guess_validity(current_guess, level):
     return True
 
 
-def create_feedback(current_guess, num_to_guess):
+def create_feedback(current_guess, num_to_guess, level):
+    """
+    Create feedback on the current guess compared to the secret number.
+    Returns a string.
+    """
 
     tally_correct_num_loc = 0
     tally_correct_num_no_loc = 0
@@ -68,6 +82,9 @@ def create_feedback(current_guess, num_to_guess):
 
 
 def game():
+    """
+    Runs one game of mastermind.
+    """
 
     level_and_num_to_guess = choose_difficulty()
     level = int(level_and_num_to_guess[0])
@@ -93,7 +110,7 @@ def game():
             print()
             print("*** You win! ***")
             break
-        feedback = create_feedback(current_guess, num_to_guess)
+        feedback = create_feedback(current_guess, num_to_guess, level)
         history_guesses.append(f"Round {num_guesses} Guess: {current_guess} Feedback: {feedback}")
         num_guesses += 1
 
@@ -101,7 +118,10 @@ def game():
 
 
 def play():
-    
+    """
+    Handles the game play and replay options.
+    """
+
     print("Welcome!")
     while True:
         print("Would you like to play a game of mastermind?")
