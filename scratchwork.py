@@ -28,21 +28,47 @@ def choose_difficulty():
     num_to_guess = api_request.text.replace("\n", "")
     return [level, num_to_guess]
 
+
 def guess_validity(current_guess, level):
+
     if current_guess.isnumeric() is False:
         print()
         print("*** Guesses need to be numeric ***")
         print()
         return False
+    
     if len(current_guess) != level:
         print()
         print(f"*** Guesses should be exactly {level} numbers ***")
         print()
         return False
+    
     return True
 
 
+def create_feedback(current_guess, num_to_guess):
+
+    tally_correct_num_loc = 0
+    tally_correct_num_no_loc = 0
+
+    for num in range(level):
+        if current_guess[num] == num_to_guess[num]:
+            tally_correct_num_loc += 1
+    copy_answer = list(num_to_guess)
+
+    for char in current_guess:
+        if char in copy_answer:
+            copy_answer.remove(char)
+            tally_correct_num_no_loc += 1
+    if tally_correct_num_no_loc == 0:
+        feedback = "All wrong"
+    else:
+        feedback = f"{tally_correct_num_no_loc} correct numbers and {tally_correct_num_loc} correct location"
+    return feedback
+
+
 def game():
+
     level_and_num_to_guess = choose_difficulty()
     level = int(level_and_num_to_guess[0])
     num_to_guess = level_and_num_to_guess[1]
@@ -60,37 +86,22 @@ def game():
 
         current_guess = input("What is your guess?")
 
-        if guess_validity(current_guess, level) == False:
+        if guess_validity(current_guess, level) is False:
             continue
 
         if current_guess == num_to_guess:
             print()
             print("*** You win! ***")
             break
+        feedback = create_feedback(current_guess, num_to_guess)
+        history_guesses.append(f"Round {num_guesses} Guess: {current_guess} Feedback: {feedback}")
+        num_guesses += 1
 
-        else:
-            tally_correct_num_loc = 0
-            tally_correct_num_no_loc = 0
-
-            for num in range(level):
-                if current_guess[num] == num_to_guess[num]:
-                    tally_correct_num_loc += 1
-            copy_answer = list(num_to_guess)
-
-            for char in current_guess:
-                if char in copy_answer:
-                    copy_answer.remove(char)
-                    tally_correct_num_no_loc += 1
-            if tally_correct_num_no_loc == 0:
-                feedback = "All wrong"
-            else:
-                feedback = f"{tally_correct_num_no_loc} correct numbers and {tally_correct_num_loc} correct location"
-            history_guesses.append(f"Round {num_guesses} Guess: {current_guess} Feedback: {feedback}")
-            num_guesses += 1
     print(f"The answer was {num_to_guess}")
 
 
 def play():
+    
     print("Welcome!")
     while True:
         print("Would you like to play a game of mastermind?")
