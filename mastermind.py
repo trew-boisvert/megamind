@@ -39,15 +39,11 @@ def guess_validity(current_guess, level):
     """
 
     if current_guess.isnumeric() is False:
-        print()
-        print("*** Guesses need to be numeric ***")
-        print()
+        print("\n*** Guesses need to be numeric ***\n")
         return False
 
     if len(current_guess) != level:
-        print()
-        print(f"*** Guesses should be exactly {level} numbers ***")
-        print()
+        print(f"\n*** Guesses should be exactly {level} numbers ***\n")
         return False
 
     return True
