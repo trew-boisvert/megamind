@@ -1,44 +1,6 @@
-"""
-game start
-4 digit number code gotten from API
-on loop
-    player can see history of guesses and feedback and remaining turns
-    player guesses combo
-        check if win, end game
-            offer replay
-        feedback on:
-            if a number is correct or if number and digit is correct
-            if whole guess was wrong
-            add to guess counter
-            ten guesses ends the game 
-                offer replay
-
-extras:
-    allow for replay
-    allow choice in length of code/ change difficulty
-        allow choice to change difficulty between replays?
-    track scores across games
-    hint mode:
-        correct guess of number and location is revealed (---- => --3-)
-        written hint about number not in code
-        written hint about correct number, but not location
-                
-think about:
-    don't make it recursive in the replays
-    handling incorrect input (wrong chars, length)
-
-test cases (2025)
-    all incorrect (1346)
-    one correct, wrong location (0789)
-    one correct, correct location (2469)
-    guessed same correct number twice, should only say correct once (0790)
-    guessed correct number there is 2 of, should say correct once (9287)
-    three correct, two correct location (2092)
-    ten wrong guesses, game over
-    ten guesses, last one all correct, game win
-    win in under 10 guesses
-"""
 import requests
+
+
 def choose_difficulty():
     print("Which difficulty level would you like?  1 (easy) 2 (normal) 3 (hard)?")
     difficulty = input("1/2/3 --- ")
@@ -65,6 +27,7 @@ def choose_difficulty():
     api_request = requests.get('https://www.random.org/integers/', params=payload)
     num_to_guess = api_request.text.replace("\n", "")
     return [level, num_to_guess]
+
 
 def game():
     level_and_num_to_guess = choose_difficulty()
@@ -116,6 +79,7 @@ def game():
             num_guesses += 1
     print(f"The answer was {num_to_guess}")
 
+
 def play():
     print("Welcome!")
     while True:
@@ -126,5 +90,6 @@ def play():
         else:
             print("Alright, enjoy your day!")
             break
+
 
 play()
