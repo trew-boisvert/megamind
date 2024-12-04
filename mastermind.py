@@ -115,14 +115,17 @@ def play():
     """
 
     print("Welcome!")
+    
     while True:
         print("Would you like to play a game of mastermind?")
         play_game = input("y/n:   ")
         if play_game == "y":
             game()
-        else:
+        elif play_game == "n":
             print("Alright, enjoy your day!")
             break
+        else:
+            print("Sorry, that's not an option.  Please choose 'y' or 'n'.")
 
 
 play()
