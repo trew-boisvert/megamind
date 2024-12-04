@@ -41,6 +41,7 @@ I put my original notes in notes.txt.  My approach, considering the timeline and
 - [x] Refactor, make it nice
 
 ## Ideas for Technical Interview
+- What if API call fails?  Handle for that
 - Set up basic webpage version of game
 - Add win/loss tracking
 - Hell mode, uses letters instead of numbers (Is this just wordle?)
