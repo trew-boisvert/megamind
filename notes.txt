@@ -25,6 +25,8 @@ extras:
 think about:
     don't make it recursive in the replays
     handling incorrect input (wrong chars, length)
+    what if the api doesn't respond?
+    modular code, make it pretty
 
 test cases (2025)
     all incorrect (1346)
