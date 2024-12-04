@@ -28,6 +28,19 @@ def choose_difficulty():
     num_to_guess = api_request.text.replace("\n", "")
     return [level, num_to_guess]
 
+def guess_validity(current_guess, level):
+    if current_guess.isnumeric() is False:
+        print()
+        print("*** Guesses need to be numeric ***")
+        print()
+        return False
+    if len(current_guess) != level:
+        print()
+        print(f"*** Guesses should be exactly {level} numbers ***")
+        print()
+        return False
+    return True
+
 
 def game():
     level_and_num_to_guess = choose_difficulty()
@@ -44,20 +57,17 @@ def game():
         print()
         print(f"Round {num_guesses} of 10")
         print()
+
         current_guess = input("What is your guess?")
+
+        if guess_validity(current_guess, level) == False:
+            continue
+
         if current_guess == num_to_guess:
             print()
             print("*** You win! ***")
             break
-        elif current_guess.isnumeric() is False:
-            print()
-            print("*** Guesses need to be numeric ***")
-            print()
-            continue
-        elif len(current_guess) != level:
-            print()
-            print(f"*** Guesses should be exactly {level} numbers ***")
-            print()
+
         else:
             tally_correct_num_loc = 0
             tally_correct_num_no_loc = 0
